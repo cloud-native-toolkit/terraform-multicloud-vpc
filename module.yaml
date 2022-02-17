@@ -1,9 +1,11 @@
-name: ""
+name: multicloud-vpc
 type: terraform
-description: ""
+description: Module to provision a VPC/VNet on Azure, AWS, or IBM Cloud.
 tags:
-    - tools
-    - devops
+    - vpc
+    - aws
+    - azure
+    - ibm
 versions:
 - platforms: []
 #  providers:

@@ -35,7 +35,7 @@ module aws-vpc {
   provision            = var.provision
   resource_group_name  = var.resource_group_name
   name                 = var.name
-  prefix_name          = var.name_prefix
+  name_prefix          = var.name_prefix
   internal_cidr        = local.internal_cidr
   external_cidr        = var.external_cidr
   instance_tenancy     = var.instance_tenancy

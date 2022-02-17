@@ -1,5 +1,5 @@
 module "resource-group" {
-  source = "./module"
+  source = "github.com/cloud-native-toolkit/terraform-multicloud-resource-group"
 
   resource_group_name = var.resource_group_name
   region              = var.region

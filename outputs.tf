@@ -48,3 +48,7 @@ output "addresses" {
   value = local.addresses
   description = "The ip address ranges for the VPC"
 }
+
+output "cloud_provider" {
+  value = var.cloud_provider
+}

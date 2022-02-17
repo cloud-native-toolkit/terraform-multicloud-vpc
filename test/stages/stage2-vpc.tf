@@ -8,3 +8,9 @@ module "vpc" {
   address_prefix_count = 1
   address_prefixes    = ["10.0.0.0/16"]
 }
+
+resource null_resource print_enabled {
+  provisioner "local-exec" {
+    command = "echo -n '${module.vpc.cloud_provider}' > .cloud_provider"
+  }
+}

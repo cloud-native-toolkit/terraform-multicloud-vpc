@@ -1,7 +1,7 @@
 
 locals {
   internal_cidr = var.address_prefix_count > 0 ? var.address_prefixes[0] : "10.0.0.0/16"
-  vpc = var.cloud_provider == "ibm" ? module.ibm-vpc : var.cloud_provider == "aws" ? module.aws-vpc : module.azure-vpc
+  vpc = try(var.cloud_provider == "ibm" ? module.ibm-vpc : var.cloud_provider == "aws" ? module.aws-vpc : var.cloud_provider == "azure" ? module.azure-vpc : tomap(false), {})
   vpc_name = lookup(local.vpc, "name", "")
   vpc_id = lookup(local.vpc, "id", "")
   acl_id = lookup(local.vpc, "acl_id", "")

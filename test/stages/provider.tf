@@ -10,7 +10,7 @@ provider "azurerm" {
 provider "aws" {
   region     = var.cloud_provider == "aws" ? var.region : null
   access_key = var.access_key
-  secret_key =var.secret_key
+  secret_key = var.secret_key
 }
 
 provider "ibm" {

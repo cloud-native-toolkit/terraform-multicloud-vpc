@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Implement validation logic"
-exit 1
+CLOUD_PROVIDER=$(cat .cloud_provider)
+
+terraform state list

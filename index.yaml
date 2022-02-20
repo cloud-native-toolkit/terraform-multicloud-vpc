@@ -95,6 +95,118 @@ versions:
         default: 0.0.0.0/0
       - name: cloud_provider
         type: string
+        description: The cloud provider where the VPC resource should be provisioned
+    version: v1.1.0
+    outputs:
+      - name: name
+        description: The name of the vpc instance
+      - name: id
+        description: The id of the vpc instance
+      - name: acl_id
+        description: The id of the network acl
+      - name: crn
+        description: The CRN for the vpc instance
+      - name: count
+        description: The number of VPCs created by this module. Always set to 1
+      - name: names
+        description: The name of the vpc instance
+      - name: ids
+        description: The id of the vpc instance
+      - name: base_security_group
+        description: >-
+          The id of the base security group to be shared by other resources. The
+          base group is different from the default security group.
+      - name: addresses
+        description: The ip address ranges for the VPC
+      - name: cloud_provider
+  - platforms: []
+    providers:
+      - name: ibm
+        source: ibm-cloud/ibm
+      - name: aws
+        source: hashicorp/aws
+      - name: azurerm
+        source: hashicorp/azurerm
+    dependencies:
+      - id: resource_group
+        refs:
+          - source: >-
+              github.com/cloud-native-toolkit/terraform-multicloud-resource-group
+            version: '>= 1.0.0'
+    variables:
+      - name: resource_group_name
+        type: string
+        description: >-
+          The name of the IBM Cloud resource group where the VPC instance will
+          be created.
+        moduleRef:
+          id: resource_group
+          output: name
+      - name: region
+        type: string
+        description: The IBM Cloud region where the cluster will be/has been installed.
+        scope: global
+      - name: name
+        type: string
+        description: The name of the vpc instance
+        default: ''
+        scope: module
+      - name: name_prefix
+        type: string
+        description: The name of the vpc resource
+        default: ''
+        scope: global
+      - name: provision
+        type: bool
+        description: >-
+          Flag indicating that the instance should be provisioned. If false then
+          an existing instance will be looked up
+        default: true
+      - name: address_prefix_count
+        type: number
+        description: The number of ipv4_cidr_blocks
+        default: '0'
+      - name: address_prefixes
+        type: list(string)
+        description: >-
+          List of ipv4 cidr blocks for the address prefixes (e.g.
+          ['10.10.10.0/24']). If you are providing cidr blocks then a value must
+          be provided for each of the subnets. If you don't provide cidr blocks
+          for each of the subnets then values will be generated using the
+          {ipv4_address_count} value.
+        default: []
+      - name: base_security_group_name
+        type: string
+        description: >-
+          The name of the base security group. If not provided the name will be
+          based on the vpc name
+        default: ''
+      - name: internal_cidr
+        type: string
+        description: The cidr range of the internal network
+        default: 10.0.0.0/8
+      - name: instance_tenancy
+        type: string
+        description: >-
+          The instance tenancy of the AWS VPC instance. Available values are
+          default, dedicated, host
+        default: default
+      - name: enable_dns_support
+        type: string
+        description: 'AWS: Enable dns support. The default value is true.'
+        default: 'true'
+      - name: enable_dns_hostnames
+        type: string
+        description: >-
+          AWS: Enable DNS hostnames. The value is required to be true for ROSA
+          deployments.
+        default: 'false'
+      - name: external_cidr
+        type: string
+        description: 'AWS: The cidr range of the external network'
+        default: 0.0.0.0/0
+      - name: cloud_provider
+        type: string
         description: >-
           The cloud provider where the VPC resource should be provisioned. Valid
           values are 'ibm' and 'aws'

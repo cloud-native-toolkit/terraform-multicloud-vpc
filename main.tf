@@ -1,7 +1,7 @@
 
 locals {
   internal_cidr = var.address_prefix_count > 0 ? var.address_prefixes[0] : "10.0.0.0/16"
-  vpc = try(var.cloud_provider == "ibm" ? module.ibm-vpc : var.cloud_provider == "aws" ? module.aws-vpc : var.cloud_provider == "azure" ? module.azure-vpc : tomap(false), {})
+  vpc = try(var.cloud_provider == "ibm" ? module.ibm-vpc[0] : var.cloud_provider == "aws" ? module.aws-vpc[0] : var.cloud_provider == "azure" ? module.azure-vpc[0] : tomap(false), {})
   vpc_name = lookup(local.vpc, "name", "")
   vpc_id = lookup(local.vpc, "id", "")
   acl_id = lookup(local.vpc, "acl_id", "")
@@ -15,8 +15,8 @@ locals {
 
 module ibm-vpc {
   source = "github.com/cloud-native-toolkit/terraform-ibm-vpc"
+  count  = var.cloud_provider == "ibm" ? 1 : 0
 
-  enabled              = var.cloud_provider == "ibm"
   provision            = var.provision
   resource_group_name  = var.resource_group_name
   region               = var.region
@@ -30,8 +30,8 @@ module ibm-vpc {
 
 module aws-vpc {
   source = "github.com/cloud-native-toolkit/terraform-aws-vpc"
+  count  = var.cloud_provider == "aws" ? 1 : 0
 
-  enabled              = var.cloud_provider == "aws"
   provision            = var.provision
   resource_group_name  = var.resource_group_name
   name                 = var.name
@@ -45,8 +45,8 @@ module aws-vpc {
 
 module azure-vpc {
   source = "github.com/cloud-native-toolkit/terraform-azure-vpc"
+  count  = var.cloud_provider == "azure" ? 1 : 0
 
-  enabled              = var.cloud_provider == "azure"
   provision            = var.provision
   resource_group_name  = var.resource_group_name
   name                 = var.name

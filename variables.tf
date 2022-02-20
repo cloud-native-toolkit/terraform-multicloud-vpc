@@ -76,5 +76,6 @@ variable "external_cidr" {
 
 variable "cloud_provider" {
   type        = string
-  description = "The cloud provider where the VPC resource should be provisioned. Valid values are 'ibm' and 'aws'"
+  description = "The cloud provider where the VPC resource should be provisioned"
+  # @enum: ibm,aws,azure
 }
